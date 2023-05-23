@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mantenimiento de libros</title>
+	</head>
+  <body>
+	<div class="col-4"></div>
+    <div class="container col-4 mt-4">
+		<div class="col-4"></div>
+		<h1 class="mb-2">Mantenimiento de libros</h1>
+		<div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert" th:if="${mensaje != null}" th:text="${mensaje}">
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<form method="POST" th:action="@{/libros/crear}" th:object="${libro}">
+			<div class="mb-3">
+		  		<label for="name" class="form-label">Titulo: </label>
+		  		<input type="hidden" id="idlibro" th:field="*{idlibro}">
+		  		<input type="text" class="form-control" id="titulo" th:field="*{titulo}">
+			</div>
+			<div class="mb-3">
+				<label for="tema" class="form-label">Tema</label>
+				<select class="form-select"  id="tema" th:field="*{idtema}" th:if="${#fields.hasErrors('tema')}">
+			  		<option th:value="-1">--Seleccione--</option>
+				 	<option th:each="tema : ${temas}" th:value="${tema.idtema}" th:text="${tema.nombre}"></option>
+				</select>
+				<span class="invalid-feedback" role="alert" th:if="${#fields.hasErrors('tema')}">
+					<strong th:errors="*{tema}"></strong>
+				</span>
+				
+			 	<select class="form-select"  aria-label="Default select example"  id="tema" th:field="*{tema}" th:if="${!#fields.hasErrors('tema')}">
+			  		<option selected value="-1">--Seleccione--</option>
+				 	<option th:each="tema : ${temas}" th:value="${tema.idtema}" th:text="${tema.nombre}"></option>
+				</select>
+			</div>
+			<div class="mb-3">
+		  		<label for="precio" class="form-label">Precio</label>
+		  		<input type="text" class="form-control is-invalid" id="precio" th:field="*{precio}" th:if="${#fields.hasErrors('precio')}">
+		  		<input type="text" class="form-control" id="precio" th:field="*{precio}" th:if="${!#fields.hasErrors('precio')}">
+				<span class="invalid-feedback" role="alert" th:if="${#fields.hasErrors('precio')}">
+					<strong th:errors="*{precio}"></strong>
+				</span>
+			</div>
+			<div class="mb-3">
+		  		<label for="cantidadEjemplares" class="form-label">Cantidad: </label>
+		  		<input type="text" class="form-control" id="cantidadEjemplares" th:field="*{cantidadEjemplares}">
+			</div>
+			<div class="mb-3">
+		  		<label for="origen" class="form-label">Origen: </label>
+		  		<input type="text" class="form-control" id="origen" th:field="*{origen}">
+			</div>
+			<div class="display-flex align-content-center">
+				<button type="submit" class="btn btn-success">Registrar</button>				
+			</div>
+		</form>
+	</div>
+	<div class="col-4"></div>
+  </body>
+</html>
